@@ -5,7 +5,7 @@ var button;
 function setup() {
   img = loadImage('arctic.png');
   
-  createCanvas(500, 500);
+  createCanvas(480, 480);
   
   input = createFileInput(handleImage);
   
@@ -13,11 +13,11 @@ function setup() {
   button.mousePressed(glitch)
   
   save_button = createButton('Save Image')
-  save_button.mousePressed(save);
+  save_button.mousePressed(saveImage);
   
-  r_slider = createSlider(-20, 20, 0);
-  g_slider = createSlider(-20, 20, 0);
-  b_slider = createSlider(-20, 20, 0);
+  r_slider = createSlider(-20, 20, random(-20, 20));
+  g_slider = createSlider(-20, 20, random(-20, 20));
+  b_slider = createSlider(-20, 20, random(-20, 20));
   
   
 }
@@ -27,6 +27,7 @@ function draw() {
   if(img){
     image(img, 0, 0, width, height, 0, 0, img.width, img.height, CONTAIN)
   }
+  
 }
 
 // Create an image if the file is an image.
@@ -46,7 +47,7 @@ function glitch(){
   
   
   img.loadPixels()
-  var new_pixels = img.pixels.slice()
+  let new_pixels = img.pixels.slice()
   
   for(let i = 0; i < img.pixels.length; i+=4){
     new_pixels[i + r_offset * 4] = img.pixels[i]
@@ -61,6 +62,6 @@ function glitch(){
   img.updatePixels()
 }
 
-function save(){
-  saveCanvas('glitch.png')
+function saveImage(){
+  img.save('glitch.png')
 }
